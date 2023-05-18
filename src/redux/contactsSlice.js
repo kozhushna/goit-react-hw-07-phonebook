@@ -4,6 +4,8 @@ import storage from 'redux-persist/lib/storage';
 
 const initialState = {
   contacts: [],
+  isLoading: false,
+  error: null,
 };
 
 const contactsSlice = createSlice({
