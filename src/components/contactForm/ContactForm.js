@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
-import { addContact } from '../../redux/contactsSlice';
+import { addContact } from 'redux/operations';
 
 import './ContactForm.css';
 
@@ -22,12 +22,7 @@ function ContactForm() {
       return;
     }
 
-    dispatch(
-      addContact({
-        name: name,
-        number: form.elements.number.value,
-      })
-    );
+    dispatch(addContact({ name, number: form.elements.number.value }));
     form.reset();
   };
 
