@@ -2,10 +2,9 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ContactListItem from 'components/contactListItem';
 import {
-  getContacts,
-  getFilter,
-  getIsLoading,
-  getError,
+  selectIsLoading,
+  selectError,
+  selectVisibleContacts,
 } from 'redux/selectors';
 import { fetchContacts } from 'redux/operations';
 
@@ -16,17 +15,10 @@ export const ContactList = () => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  const contacts = useSelector(getContacts);
-  const isLoading = useSelector(getIsLoading);
-  const error = useSelector(getError);
-  const filter = useSelector(getFilter);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+  const visibleContacts = useSelector(selectVisibleContacts);
 
-  const getVisibleContacts = () => {
-    const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
-  };
   return (
     <>
       {isLoading ? (
@@ -37,7 +29,7 @@ export const ContactList = () => {
             <div>{error}</div>
           ) : (
             <ul>
-              {getVisibleContacts().map(({ id, name, number }) => {
+              {visibleContacts.map(({ id, name, number }) => {
                 return (
                   <ContactListItem
                     key={id}
